@@ -15,7 +15,10 @@ TUSB_PATH    = lib/tinyusb/src
 NRFX_PATH    = lib/nrfx
 SD_PATH      = lib/softdevice/$(SD_FILENAME)
 
-SD_VERSION   = 6.1.1
+ifndef SD_VERSION
+   SD_VERSION   = 6.1.1
+endif
+
 SD_FILENAME  = $(SD_NAME)_nrf52_$(SD_VERSION)
 SD_HEX       = $(SD_PATH)/$(SD_FILENAME)_softdevice.hex
 
@@ -372,6 +375,10 @@ $(BUILD):
 clean:
 	@$(RM) $(BUILD)
 	@$(RM) $(BIN)
+
+# linkermap must be install previously at https://github.com/hathach/linkermap
+linkermap: $(BUILD)/$(OUT_NAME).out
+	@linkermap -v $<.map
 
 # Create objects from C SRC files
 $(BUILD)/%.o: %.c
