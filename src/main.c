@@ -224,7 +224,6 @@ int main(void)
     bootloader_app_start();
   }
 
-  NRF_POWER->GPREGRET = 0xA8; // No application was loaded, reset the system with the OTA DFU update
   NVIC_SystemReset();
 }
 
@@ -235,6 +234,7 @@ static void check_dfu_mode(void)
   // SD is already Initialized in case of BOOTLOADER_DFU_OTA_MAGIC
   _sd_inited = (gpregret == DFU_MAGIC_OTA_APPJUM);
 
+  // bool const reason_dog_reset = NRF_POWER->RESETREAS & POWER_RESETREAS_DOG_Msk; // todo can remove this if code written properly and tested before uploading
   // Start Bootloader in BLE OTA mode
   _ota_dfu = (gpregret == DFU_MAGIC_OTA_APPJUM) || (gpregret == DFU_MAGIC_OTA_RESET);
 
@@ -302,6 +302,15 @@ static void check_dfu_mode(void)
   // Enter DFU mode accordingly to input
   if ( dfu_start || !valid_app )
   {
+
+#ifdef OTA_DFU_ON_INVALID_APP
+    if (!valid_app) _ota_dfu = true;
+#endif
+
+#ifdef ONLY_OTA_DFU
+    _ota_dfu = true;
+#endif
+
     if ( _ota_dfu )
     {
       led_state(STATE_BLE_DISCONNECTED);
@@ -317,6 +326,9 @@ static void check_dfu_mode(void)
       usb_init(serial_only_dfu);
     }
 
+#ifdef ONLY_OTA_DFU
+    bootloader_dfu_start(_ota_dfu, 0, false);
+#else
     // Initiate an update of the firmware.
     if (APP_ASKS_FOR_SINGLE_TAP_RESET() || uf2_dfu || serial_only_dfu)
     {
@@ -328,6 +340,7 @@ static void check_dfu_mode(void)
       // No timeout if bootloader requires user action (double-reset).
        bootloader_dfu_start(_ota_dfu, 0, false);
     }
+#endif
 
     if ( _ota_dfu )
     {

@@ -44,6 +44,7 @@
 //--------------------------------------------------------------------+
 // BLE OTA
 //--------------------------------------------------------------------+
+#define ONLY_OTA_DFU
 #define BLEDIS_MANUFACTURER   "Aibstract"
 #define BLEDIS_MODEL          "Ring"
 
