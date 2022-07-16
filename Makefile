@@ -403,6 +403,10 @@ $(BUILD)/$(OUT_NAME).hex: $(BUILD)/$(OUT_NAME).out
 	@echo Create $(notdir $@)
 	@$(OBJCOPY) -O ihex $< $@
 
+$(BUILD)/$(OUT_NAME).elf: $(OBJECTS)
+	@echo LINK $@
+	@$(CC) -o $@ $(LDFLAGS) $^ -Wl,--start-group $(LIBS) -Wl,--end-group
+
 # Hex file with mbr (still no SD)
 $(BUILD)/$(OUT_NAME)_nosd.hex: $(BUILD)/$(OUT_NAME).hex
 	@echo Create $(notdir $@)
@@ -414,12 +418,12 @@ $(BUILD)/update-$(OUT_NAME)_nosd.uf2: $(BUILD)/$(OUT_NAME)_nosd.hex
 	@python3 lib/uf2/utils/uf2conv.py -f 0xd663823c -c -o $@ $^
 
 # merge bootloader and sd hex together
-$(BUILD)/$(MERGED_FILE).hex: $(BUILD)/$(OUT_NAME).hex
+$(BUILD)/$(MERGED_FILE).hex: $(BUILD)/$(OUT_NAME).hex 
 	@echo Create $(notdir $@)
 	@python3 tools/hexmerge.py -o $@ $< $(SD_HEX)
 
 # Create pkg zip file for bootloader+SD combo to use with DFU CDC
-$(BUILD)/$(MERGED_FILE).zip: $(BUILD)/$(OUT_NAME).hex
+$(BUILD)/$(MERGED_FILE).zip: $(BUILD)/$(OUT_NAME).hex $(BUILD)/$(OUT_NAME).elf
 	@$(NRFUTIL) dfu genpkg --dev-type 0x0052 --dev-revision $(DFU_DEV_REV) --bootloader $< --softdevice $(SD_HEX) $@
 
 #-------------- Artifacts --------------
