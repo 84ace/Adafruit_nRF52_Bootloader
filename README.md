@@ -58,7 +58,7 @@ There are two pins, `DFU` and `FRST` that bootloader will check upon reset/power
 - <s>`DFU = HIGH` and `FRST = LOW`: Factory Reset mode: erase firmware application and its data</s>
 - `DFU = HIGH` and `FRST = HIGH`: Go to application code if it is present, otherwise enter DFU with UF2
 - The `GPREGRET` register can also be set to force the bootloader can enter any of above modes (plus a CDC-only mode for Arduino).
-`GPREGRET` is set by the application before performing a soft reset.
+  `GPREGRET` is set by the application before performing a soft reset.
 
 ```c
 #include "nrf_nvic.h"
@@ -73,7 +73,7 @@ So holding down **Button1** while clicking **RESET** will put the board into USB
 Holding down **Button2** while clicking **RESET** will put the board into OTA (over-the-air) bootloader mode.
 
 On the Nordic PCA10059 Dongle board, `DFU` is connected to the white button.
-`FRST` is connected to pin 1.10. Ground it to pull `FRST` low, as if you had pushed an `FRST`  button.
+`FRST` is connected to pin 1.10. Ground it to pull `FRST` low, as if you had pushed an `FRST` button.
 There is an adjacent ground pad.
 
 For other boards, please check the board definition for details.
@@ -124,6 +124,16 @@ You must have have a J-Link available to "unbrick" your device.
 ### Prerequisites
 
 - ARM GCC
+To install for macos
+
+```bash
+brew install --cask gcc-arm-embedded # This one-liner worked
+
+brew tap ArmMbed/homebrew-formulae
+brew install arm-none-eabi-gcc
+brew link --overwrite arm-none-eabi-gcc # if a prior version was present
+```
+
 - Nordic's [nRF5x Command Line Tools](https://www.nordicsemi.com/Software-and-Tools/Development-Tools/nRF-Command-Line-Tools)
 - [Python IntelHex](https://pypi.org/project/IntelHex/)
 
@@ -189,6 +199,7 @@ make: *** [_build/main.o] Error 127
 
 ... you may need to pass the location of the GCC ARM toolchain binaries to `make` using
 the variable `CROSS_COMPILE` as below:
+
 ```
 $ make CROSS_COMPILE=/opt/gcc-arm-none-eabi-9-2019-q4-major/bin/arm-none-eabi- BOARD=feather_nrf52832 all
 ```
@@ -203,7 +214,11 @@ Install python-intelhex with
 pip install intelhex
 ```
 
+<<<<<<< HEAD
 #### `make: nrfjprog: No such file or directory`
+=======
+#### 3. `make: nrfjprog: No such file or directory`
+>>>>>>> f18e66d5ba058cb25897d8c0b6c1cab63d160a94
 
 Make sure that `nrfjprog` is available from the command-line. This binary is
 part of Nordic's nRF5x Command Line Tools.
