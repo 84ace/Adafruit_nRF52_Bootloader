@@ -3,26 +3,10 @@
 [![Build Status](https://github.com/adafruit/Adafruit_nRF52_Bootloader/workflows/Build/badge.svg)](https://github.com/adafruit/Adafruit_nRF52_Bootloader/actions)
 
 This is a CDC/DFU/UF2 bootloader for nRF52 boards.
-
-- [Adafruit CLUE](https://www.adafruit.com/product/4500)
-- [Adafruit Circuit Playground Bluefruit](https://www.adafruit.com/product/4333)
+- [Llama-TaDama](https://placeholder.com)
 - [Adafruit Feather nRF52832](https://www.adafruit.com/product/3406)
 - [Adafruit Feather nRF52840 Express](https://www.adafruit.com/product/4062)
-- [Adafruit Feather nRF52840 Sense](https://www.adafruit.com/product/4516)
-- [Adafruit ItsyBitsy nRF52840 Express](https://www.adafruit.com/product/4481)
-- [Adafruit LED Glasses Driver nRF52840](https://www.adafruit.com/product/5217)
-- Adafruit Metro nRF52840 Express
-- [Akizukidenshi AE-BL652-BO](https://akizukidenshi.com/catalog/g/gK-15567/)
-- [Electronut Labs Papyr](https://docs.electronut.in/papyr/)
-- [iLabs Challenger 840 BLE](https://ilabs.se/challenger-840-ble-datasheet/)
-- [MakerDiary MDK nRF52840 USB Dongle](https://makerdiary.com/products/nrf52840-mdk-usb-dongle)
-- [MakerDiary nRF52840 M.2 Module](https://makerdiary.com/products/nrf52840-m2-module)
-- [Nordic nRF52840DK PCA10056](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52840-DK)
-- [Nordic nRF52840DK PCA10059 ("Dongle")](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52840-Dongle)
-- Particle Argon
-- Particle Boron
-- Particle Xenon
-- [SparkFun MicroMod nRF52840](https://www.sparkfun.com/products/16984)
+
 
 UF2 is an easy-to-use bootloader that appears as a flash drive. You can just copy `.uf2`-format
 application images to the flash drive to load new firmware. See https://github.com/Microsoft/uf2 and https://github.com/adafruit/uf2-samdx1 for more information.
@@ -214,11 +198,7 @@ Install python-intelhex with
 pip install intelhex
 ```
 
-<<<<<<< HEAD
 #### `make: nrfjprog: No such file or directory`
-=======
-#### 3. `make: nrfjprog: No such file or directory`
->>>>>>> f18e66d5ba058cb25897d8c0b6c1cab63d160a94
 
 Make sure that `nrfjprog` is available from the command-line. This binary is
 part of Nordic's nRF5x Command Line Tools.
